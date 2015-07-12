@@ -16,6 +16,7 @@
 
 // GA
 #include <ga/genericgeneticalgorithm.h>
+#include <ga/nonparallelgenericgeneticalgorithm.h>
 
 
 QNNUI::QNNUI(QWidget *parent) :
@@ -47,6 +48,7 @@ QNNUI::QNNUI(QWidget *parent) :
 
     QStringList ga;
     ga << "GenericGeneticAlgorithm";
+    ga << "NonParallelGenericGeneticAlgorithm";
 
     _ga_model->setStringList(ga);
 }
@@ -108,6 +110,10 @@ void QNNUI::on_pushButton_clicked()
     if(selection == "GenericGeneticAlgorithm")
     {
         ga = new GenericGeneticAlgorithm(network, simulation);
+    }
+    else if(selection == "NonParallelGenericGeneticAlgorithm")
+    {
+        ga = new NonParallelGenericGeneticAlgorithm(network, simulation);
     }
     else
     {
