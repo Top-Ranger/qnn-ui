@@ -18,8 +18,8 @@ public:
     ~GAProgress();
 
 public slots:
-    void get_ga_progress(int current, int max, double best_fitness_value);
-    void ga_finished(double best_fitness_value);
+    void get_ga_progress(int current, int max, double best_fitness_value, double average_fitness);
+    void ga_finished(double best_fitness_value, double average_fitness, int rounds);
 
 private:
     Ui::GAProgress *ui;
