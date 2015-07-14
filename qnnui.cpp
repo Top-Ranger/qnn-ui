@@ -10,6 +10,7 @@
 #include <network/abstractneuralnetwork.h>
 #include <network/feedforwardnetwork.h>
 #include <network/continuoustimerecurrenneuralnetwork.h>
+#include <network/gasnet.h>
 
 // SIM
 #include <simulation/genericsimulation.h>
@@ -38,6 +39,7 @@ QNNUI::QNNUI(QWidget *parent) :
     QStringList nn;
     nn << "FeedForwardNeuralNetwork";
     nn << "ContinuousTimeRecurrenNeuralNetwork";
+    nn << "GasNet";
 
     _nn_model->setStringList(nn);
 
@@ -98,6 +100,10 @@ void QNNUI::on_pushButton_clicked()
     else if(selection == "ContinuousTimeRecurrenNeuralNetwork")
     {
         network = new ContinuousTimeRecurrenNeuralNetwork(simulation->needInputLength(), simulation->needOutputLength(), 2*simulation->needInputLength()*simulation->needOutputLength());
+    }
+    else if(selection == "GasNet")
+    {
+        network = new GasNet(simulation->needInputLength(), simulation->needOutputLength());
     }
     else
     {
