@@ -11,6 +11,7 @@ public:
     explicit GAThread(GenericGeneticAlgorithm *ga, QObject *parent = 0);
 
     void run();
+    GenericGene getBestGene();
 
 signals:
 

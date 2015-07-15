@@ -2,6 +2,7 @@
 #include "ui_gaprogress.h"
 
 #include <QMessageBox>
+#include <QFileDialog>
 
 GAProgress::GAProgress(GenericGeneticAlgorithm *ga, QWidget *parent) :
     QDialog(parent),
@@ -38,5 +39,19 @@ void GAProgress::ga_finished(double best_fitness_value, double average_fitness, 
     QMessageBox::information(this,
                              tr("GA finished"),
                              QString(tr("Genetic algorithm finished with a fitness of %1 (avg. %2) after %3 rounds").arg(best_fitness_value).arg(average_fitness).arg(rounds)));
-     this->close();
+    if(QMessageBox::information(this, tr("Save Gene"), tr("Do you want to save the best gene?"), QMessageBox::Yes|QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
+    {
+        QString path = QFileDialog::getSaveFileName(this, tr("Save Gene"), "", "");
+        if(path != "")
+        {
+            QFile file(path);
+            if(!_thread->getBestGene().saveGene(&file))
+            {
+                QMessageBox::warning(this,
+                                     tr("Can not save"),
+                                     tr("Can not save gene"));
+            }
+        }
+    }
+    this->close();
 }

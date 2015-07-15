@@ -10,3 +10,8 @@ void GAThread::run()
 {
     _ga->run_ga();
 }
+
+GenericGene GAThread::getBestGene()
+{
+    return _ga->best_gene();
+}
