@@ -99,11 +99,11 @@ void QNNUI::on_pushButton_clicked()
     }
     else if(selection == "ContinuousTimeRecurrenNeuralNetwork")
     {
-        network = new ContinuousTimeRecurrenNeuralNetwork(simulation->needInputLength(), simulation->needOutputLength(), 2*simulation->needInputLength()*simulation->needOutputLength());
+        network = new ContinuousTimeRecurrenNeuralNetwork(simulation->needInputLength(), simulation->needOutputLength());
     }
     else if(selection == "GasNet")
     {
-        network = new GasNet(simulation->needInputLength(), simulation->needOutputLength());
+        network = new GasNet(simulation->needInputLength(), 4*simulation->needOutputLength());
     }
     else
     {

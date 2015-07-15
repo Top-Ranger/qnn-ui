@@ -12,17 +12,17 @@ TARGET = qnn-ui
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        qnnui.cpp \
-    gaprogress.cpp \
-    gathread.cpp
+SOURCES += src/main.cpp\
+        src/qnnui.cpp \
+    src/gaprogress.cpp \
+    src/gathread.cpp
 
-HEADERS  += qnnui.h \
-    gaprogress.h \
-    gathread.h
+HEADERS  += src/qnnui.h \
+    src/gaprogress.h \
+    src/gathread.h
 
-FORMS    += qnnui.ui \
-    gaprogress.ui
+FORMS    += src/qnnui.ui \
+    src/gaprogress.ui
 
 unix|win32: LIBS += -L$$PWD/../qnn/ -lqnn
 
