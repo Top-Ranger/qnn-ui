@@ -3,6 +3,7 @@
 
 #include <QMessageBox>
 #include <QFileDialog>
+#include <network/genericgene.h>
 
 GAProgress::GAProgress(GenericGeneticAlgorithm *ga, QWidget *parent) :
     QDialog(parent),
@@ -45,12 +46,14 @@ void GAProgress::ga_finished(double best_fitness_value, double average_fitness, 
         if(path != "")
         {
             QFile file(path);
-            if(!_thread->getBestGene().saveGene(&file))
+            GenericGene *gene = _thread->getBestGene();
+            if(!gene->saveGene(&file))
             {
                 QMessageBox::warning(this,
                                      tr("Can not save"),
                                      tr("Can not save gene"));
             }
+            delete gene;
         }
     }
     this->close();
