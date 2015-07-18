@@ -2,6 +2,8 @@
 #define GAPROGRESS_H
 
 #include <QDialog>
+#include <QFile>
+#include <QTextStream>
 #include <ga/genericgeneticalgorithm.h>
 #include "gathread.h"
 
@@ -24,6 +26,8 @@ public slots:
 private:
     Ui::GAProgress *ui;
     GAThread *_thread;
+    QFile *_file;
+    QTextStream *_stream;
 };
 
 #endif // GAPROGRESS_H
