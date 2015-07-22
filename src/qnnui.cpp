@@ -1,6 +1,7 @@
 #include "qnnui.h"
 #include "ui_qnnui.h"
 
+#include <math.h>
 #include <QStringList>
 #include <QMessageBox>
 #include "gaprogress.h"
@@ -38,6 +39,7 @@ QNNUI::QNNUI(QWidget *parent) :
 
     QStringList nn;
     nn << "FeedForwardNeuralNetwork";
+    nn << "FeedForwardNeuralNetwork (tanh)";
     nn << "ContinuousTimeRecurrenNeuralNetwork";
     nn << "GasNet";
 
@@ -96,6 +98,12 @@ void QNNUI::on_pushButton_clicked()
     if(selection == "FeedForwardNeuralNetwork")
     {
         network = new FeedForwardNetwork(simulation->needInputLength(), simulation->needOutputLength());
+    }
+    else if(selection == "FeedForwardNeuralNetwork (tanh)")
+    {
+        FeedForwardNetwork::FeedForwardNetwork_config config;
+        config.activision_function = &tanh;
+        network = new FeedForwardNetwork(simulation->needInputLength(), simulation->needOutputLength(), config);
     }
     else if(selection == "ContinuousTimeRecurrenNeuralNetwork")
     {
