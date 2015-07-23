@@ -12,6 +12,7 @@
 #include <network/feedforwardnetwork.h>
 #include <network/continuoustimerecurrenneuralnetwork.h>
 #include <network/gasnet.h>
+#include <network/modulatedspikingneuronsnetwork.h>
 
 // SIM
 #include <simulation/genericsimulation.h>
@@ -42,6 +43,11 @@ QNNUI::QNNUI(QWidget *parent) :
     nn << "FeedForwardNeuralNetwork (tanh)";
     nn << "ContinuousTimeRecurrenNeuralNetwork";
     nn << "GasNet";
+    nn << "ModulatedSpikingNeuronsNetwork (a)";
+    nn << "ModulatedSpikingNeuronsNetwork (b)";
+    nn << "ModulatedSpikingNeuronsNetwork (c)";
+    nn << "ModulatedSpikingNeuronsNetwork (d)";
+    nn << "ModulatedSpikingNeuronsNetwork (full)";
 
     _nn_model->setStringList(nn);
 
@@ -112,6 +118,51 @@ void QNNUI::on_pushButton_clicked()
     else if(selection == "GasNet")
     {
         network = new GasNet(simulation->needInputLength(), 4*simulation->needOutputLength());
+    }
+    else if(selection == "ModulatedSpikingNeuronsNetwork (a)")
+    {
+        ModulatedSpikingNeuronsNetwork::ModulatedSpikingNeuronsNetwork_config config;
+        config.a_modulated = true;
+        config.b_modulated = false;
+        config.c_modulated = false;
+        config.d_modulated = false;
+        network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), 4*simulation->needOutputLength(), config);
+    }
+    else if(selection == "ModulatedSpikingNeuronsNetwork (b)")
+    {
+        ModulatedSpikingNeuronsNetwork::ModulatedSpikingNeuronsNetwork_config config;
+        config.a_modulated = false;
+        config.b_modulated = true;
+        config.c_modulated = false;
+        config.d_modulated = false;
+        network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), 4*simulation->needOutputLength(), config);
+    }
+    else if(selection == "ModulatedSpikingNeuronsNetwork (c)")
+    {
+        ModulatedSpikingNeuronsNetwork::ModulatedSpikingNeuronsNetwork_config config;
+        config.a_modulated = false;
+        config.b_modulated = false;
+        config.c_modulated = true;
+        config.d_modulated = false;
+        network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), 4*simulation->needOutputLength(), config);
+    }
+    else if(selection == "ModulatedSpikingNeuronsNetwork (d)")
+    {
+        ModulatedSpikingNeuronsNetwork::ModulatedSpikingNeuronsNetwork_config config;
+        config.a_modulated = false;
+        config.b_modulated = false;
+        config.c_modulated = false;
+        config.d_modulated = true;
+        network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), 4*simulation->needOutputLength(), config);
+    }
+    else if(selection == "ModulatedSpikingNeuronsNetwork (full)")
+    {
+        ModulatedSpikingNeuronsNetwork::ModulatedSpikingNeuronsNetwork_config config;
+        config.a_modulated = true;
+        config.b_modulated = true;
+        config.c_modulated = true;
+        config.d_modulated = true;
+        network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), 4*simulation->needOutputLength(), config);
     }
     else
     {
