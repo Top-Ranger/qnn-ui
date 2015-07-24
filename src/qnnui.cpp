@@ -48,6 +48,7 @@ QNNUI::QNNUI(QWidget *parent) :
     nn << "ModulatedSpikingNeuronsNetwork (c)";
     nn << "ModulatedSpikingNeuronsNetwork (d)";
     nn << "ModulatedSpikingNeuronsNetwork (full)";
+    nn << "ModulatedSpikingNeuronsNetwork (none)";
 
     _nn_model->setStringList(nn);
 
@@ -162,6 +163,15 @@ void QNNUI::on_pushButton_clicked()
         config.b_modulated = true;
         config.c_modulated = true;
         config.d_modulated = true;
+        network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), 4*simulation->needOutputLength(), config);
+    }
+    else if(selection == "ModulatedSpikingNeuronsNetwork (none)")
+    {
+        ModulatedSpikingNeuronsNetwork::ModulatedSpikingNeuronsNetwork_config config;
+        config.a_modulated = false;
+        config.b_modulated = false;
+        config.c_modulated = false;
+        config.d_modulated = false;
         network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), 4*simulation->needOutputLength(), config);
     }
     else
