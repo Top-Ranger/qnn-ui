@@ -108,7 +108,7 @@ void QNNUI::on_pushButton_clicked()
     }
     else if(selection == "FeedForwardNeuralNetwork (tanh)")
     {
-        FeedForwardNetwork::FeedForwardNetwork_config config;
+        FeedForwardNetwork::config config;
         config.activision_function = &tanh;
         network = new FeedForwardNetwork(simulation->needInputLength(), simulation->needOutputLength(), config);
     }
@@ -122,7 +122,7 @@ void QNNUI::on_pushButton_clicked()
     }
     else if(selection == "ModulatedSpikingNeuronsNetwork (a)")
     {
-        ModulatedSpikingNeuronsNetwork::ModulatedSpikingNeuronsNetwork_config config;
+        ModulatedSpikingNeuronsNetwork::config config;
         config.a_modulated = true;
         config.b_modulated = false;
         config.c_modulated = false;
@@ -131,7 +131,7 @@ void QNNUI::on_pushButton_clicked()
     }
     else if(selection == "ModulatedSpikingNeuronsNetwork (b)")
     {
-        ModulatedSpikingNeuronsNetwork::ModulatedSpikingNeuronsNetwork_config config;
+        ModulatedSpikingNeuronsNetwork::config config;
         config.a_modulated = false;
         config.b_modulated = true;
         config.c_modulated = false;
@@ -140,7 +140,7 @@ void QNNUI::on_pushButton_clicked()
     }
     else if(selection == "ModulatedSpikingNeuronsNetwork (c)")
     {
-        ModulatedSpikingNeuronsNetwork::ModulatedSpikingNeuronsNetwork_config config;
+        ModulatedSpikingNeuronsNetwork::config config;
         config.a_modulated = false;
         config.b_modulated = false;
         config.c_modulated = true;
@@ -149,7 +149,7 @@ void QNNUI::on_pushButton_clicked()
     }
     else if(selection == "ModulatedSpikingNeuronsNetwork (d)")
     {
-        ModulatedSpikingNeuronsNetwork::ModulatedSpikingNeuronsNetwork_config config;
+        ModulatedSpikingNeuronsNetwork::config config;
         config.a_modulated = false;
         config.b_modulated = false;
         config.c_modulated = false;
@@ -158,7 +158,7 @@ void QNNUI::on_pushButton_clicked()
     }
     else if(selection == "ModulatedSpikingNeuronsNetwork (full)")
     {
-        ModulatedSpikingNeuronsNetwork::ModulatedSpikingNeuronsNetwork_config config;
+        ModulatedSpikingNeuronsNetwork::config config;
         config.a_modulated = true;
         config.b_modulated = true;
         config.c_modulated = true;
@@ -167,7 +167,7 @@ void QNNUI::on_pushButton_clicked()
     }
     else if(selection == "ModulatedSpikingNeuronsNetwork (none)")
     {
-        ModulatedSpikingNeuronsNetwork::ModulatedSpikingNeuronsNetwork_config config;
+        ModulatedSpikingNeuronsNetwork::config config;
         config.a_modulated = false;
         config.b_modulated = false;
         config.c_modulated = false;
