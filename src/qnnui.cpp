@@ -16,6 +16,7 @@
 
 // SIM
 #include <simulation/genericsimulation.h>
+#include <simulation/tmazesimulation.h>
 
 // GA
 #include <ga/genericgeneticalgorithm.h>
@@ -55,6 +56,7 @@ QNNUI::QNNUI(QWidget *parent) :
 
     QStringList sim;
     sim << "GenericSimulation";
+    sim << "TMazeSimulation";
 
     _sim_model->setStringList(sim);
 
@@ -94,7 +96,10 @@ void QNNUI::on_pushButton_clicked()
     {
         simulation = new GenericSimulation();
     }
-
+    else if(selection == "TMazeSimulation")
+    {
+        simulation = new TMazeSimulation();
+    }
     else
     {
         showUnknownSelectionWindow(selection);
