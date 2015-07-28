@@ -44,6 +44,8 @@ QNNUI::QNNUI(QWidget *parent) :
     nn << "FeedForwardNeuralNetwork (tanh)";
     nn << "ContinuousTimeRecurrenNeuralNetwork";
     nn << "ContinuousTimeRecurrenNeuralNetwork (tanh)";
+    nn << "ContinuousTimeRecurrenNeuralNetwork (size changing)";
+    nn << "ContinuousTimeRecurrenNeuralNetwork (size changing, tanh)";
     nn << "GasNet";
     nn << "ModulatedSpikingNeuronsNetwork (a)";
     nn << "ModulatedSpikingNeuronsNetwork (b)";
@@ -127,6 +129,19 @@ void QNNUI::on_pushButton_clicked()
         ContinuousTimeRecurrenNeuralNetwork::config config;
         config.activision_function = &tanh;
         network = new ContinuousTimeRecurrenNeuralNetwork(simulation->needInputLength(), simulation->needOutputLength(), config);
+    }
+    else if(selection == "ContinuousTimeRecurrenNeuralNetwork (size changing)")
+    {
+         ContinuousTimeRecurrenNeuralNetwork::config config;
+         config.size_changing = true;
+         network = new ContinuousTimeRecurrenNeuralNetwork(simulation->needInputLength(), simulation->needOutputLength(), config);
+    }
+    else if(selection == "ContinuousTimeRecurrenNeuralNetwork (size changing, tanh)")
+    {
+         ContinuousTimeRecurrenNeuralNetwork::config config;
+         config.size_changing = true;
+         config.activision_function = &tanh;
+         network = new ContinuousTimeRecurrenNeuralNetwork(simulation->needInputLength(), simulation->needOutputLength(), config);
     }
     else if(selection == "GasNet")
     {
