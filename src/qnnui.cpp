@@ -134,12 +134,14 @@ void QNNUI::on_pushButton_clicked()
     {
          ContinuousTimeRecurrenNeuralNetwork::config config;
          config.size_changing = true;
+         config.network_default_size_grow = 1;
          network = new ContinuousTimeRecurrenNeuralNetwork(simulation->needInputLength(), simulation->needOutputLength(), config);
     }
     else if(selection == "ContinuousTimeRecurrenNeuralNetwork (size changing, tanh)")
     {
          ContinuousTimeRecurrenNeuralNetwork::config config;
          config.size_changing = true;
+         config.network_default_size_grow = 1;
          config.activision_function = &tanh;
          network = new ContinuousTimeRecurrenNeuralNetwork(simulation->needInputLength(), simulation->needOutputLength(), config);
     }
