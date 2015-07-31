@@ -1,50 +1,56 @@
 #include "gaprogress.h"
 #include "ui_gaprogress.h"
+#include "runproperties.h"
 
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QTime>
+#include <QDate>
 #include <network/genericgene.h>
 
 GAProgress::GAProgress(GenericGeneticAlgorithm *ga, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GAProgress),
+    _run(0),
+    _amountRuns(1),
+    _saveGA(false),
+    _saveGene(false),
+    _folderPath(""),
+    _fileName(""),
     _thread(NULL),
     _file(NULL),
-    _stream(NULL)
+    _stream(NULL),
+    _ga(ga)
 {
     ui->setupUi(this);
 
-    if(QMessageBox::information(this, tr("Save Details"), tr("Do you want to save the details of this run as comma-seperated values?"), QMessageBox::Yes|QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
+    RunProperties window;
+    if(window.exec() == window.Accepted && window.folderPath() != "")
     {
-        QFileDialog dialog(this, tr("Save ga run"), "", "comma-seperated values (*.csv)");
-        dialog.setAcceptMode(QFileDialog::AcceptSave);
-        dialog.setDefaultSuffix("csv");
-        dialog.exec();
-        QString path = dialog.selectedFiles()[0];
-        if(path != "")
-        {
-            _file = new QFile(path);
-            if(_file->open(QIODevice::WriteOnly))
-            {
-                _stream = new QTextStream(_file);
-                *_stream << "round;best_fitness;average_fitness\n";
-            }
-        }
+        _amountRuns = window.runs();
+        _saveGA = window.saveGA();
+        _saveGene = window.saveGene();
+        _folderPath = window.folderPath();
+        _fileName = QString("%1T%2").arg(QDate::currentDate().toString("yyyy-mm-dd")).arg(QTime::currentTime().toString("HH:mm:ss.zzz"));
     }
 
     this->setWindowFlags(((windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint));
+    ui->progressBar_2->setMaximum(_amountRuns);
 
-    QObject::connect(ga,SIGNAL(ga_current_round(int,int,double, double)),this,SLOT(get_ga_progress(int,int,double, double)));
-    QObject::connect(ga,SIGNAL(ga_finished(double, double, int)),this,SLOT(ga_finished(double, double, int)));
+    QObject::connect(_ga,SIGNAL(ga_current_round(int,int,double, double)),this,SLOT(get_ga_progress(int,int,double, double)));
+    QObject::connect(_ga,SIGNAL(ga_finished(double, double, int)),this,SLOT(ga_finished(double, double, int)));
 
-    _thread = new GAThread(ga);
-    _thread->start();
+    startRun();
 }
 
 GAProgress::~GAProgress()
 {
     delete ui;
-    delete _thread;
+
+    if(_thread != NULL)
+    {
+        delete _thread;
+    }
     if(_stream != NULL)
     {
         delete _stream;
@@ -54,6 +60,48 @@ GAProgress::~GAProgress()
         _file->close();
         delete _file;
     }
+}
+
+void GAProgress::startRun()
+{
+    if(_file != NULL)
+    {
+        _file->close();
+        delete _file;
+    }
+
+    if(_stream != NULL)
+    {
+        delete _stream;
+    }
+
+    if(_saveGA && _folderPath != "")
+    {
+        QString path(_folderPath);
+        path = path.append("/%1-%2.csv").arg(_fileName).arg(_run+1);
+
+        _file = new QFile(path);
+        if(_file->open(QIODevice::WriteOnly))
+        {
+            _stream = new QTextStream(_file);
+            *_stream << "round;best_fitness;average_fitness\n";
+        }
+    }
+
+    if(_run != 0)
+    {
+        ui->textEdit->append(QString(tr("\n")).arg(_run+1));
+    }
+
+    ui->textEdit->append(QString(tr("+++ Starting run %1 +++")).arg(_run+1));
+
+            if(_thread != NULL)
+    {
+        delete _thread;
+    }
+
+    _thread = new GAThread(_ga);
+    _thread->start();
 }
 
 void GAProgress::get_ga_progress(int current, int max, double best_fitness_value, double average_fitness)
@@ -69,28 +117,30 @@ void GAProgress::get_ga_progress(int current, int max, double best_fitness_value
 
 void GAProgress::ga_finished(double best_fitness_value, double average_fitness, int rounds)
 {
-    QMessageBox::information(this,
-                             tr("GA finished"),
-                             QString(tr("Genetic algorithm finished with a fitness of %1 (avg. %2) after %3 rounds").arg(best_fitness_value).arg(average_fitness).arg(rounds)));
-    if(QMessageBox::information(this, tr("Save Gene"), tr("Do you want to save the best gene?"), QMessageBox::Yes|QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
+    if(_saveGene)
     {
-        QFileDialog dialog(this, tr("Save gene"), "", "Gene (*.gene)");
-        dialog.setAcceptMode(QFileDialog::AcceptSave);
-        dialog.setDefaultSuffix("gene");
-        dialog.exec();
-        QString path = dialog.selectedFiles()[0];
-        if(path != "")
+        QString path(_folderPath);
+        path = path.append("/%1-%2.gene").arg(_fileName).arg(_run+1);
+        QFile file(path);
+        GenericGene *gene = _thread->getBestGene();
+        if(!gene->saveGene(&file))
         {
-            QFile file(path);
-            GenericGene *gene = _thread->getBestGene();
-            if(!gene->saveGene(&file))
-            {
-                QMessageBox::warning(this,
-                                     tr("Can not save"),
-                                     tr("Can not save gene"));
-            }
-            delete gene;
+            QMessageBox::warning(this,
+                                 tr("Can not save"),
+                                 tr("Can not save gene"));
         }
+        delete gene;
     }
-    this->close();
+    if(++_run < _amountRuns)
+    {
+        startRun();
+    }
+    else
+    {
+        QMessageBox::information(this,
+                                 tr("Finished"),
+                                 tr("All runs finished"),
+                                 QMessageBox::Ok);
+        this->close();
+    }
 }

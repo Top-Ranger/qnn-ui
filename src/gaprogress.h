@@ -24,10 +24,19 @@ public slots:
     void ga_finished(double best_fitness_value, double average_fitness, int rounds);
 
 private:
+    void startRun();
+
     Ui::GAProgress *ui;
+    int _run;
+    int _amountRuns;
+    bool _saveGA;
+    bool _saveGene;
+    QString _folderPath;
+    QString _fileName;
     GAThread *_thread;
     QFile *_file;
     QTextStream *_stream;
+    GenericGeneticAlgorithm *_ga;
 };
 
 #endif // GAPROGRESS_H

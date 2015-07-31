@@ -15,14 +15,17 @@ TEMPLATE = app
 SOURCES += src/main.cpp\
         src/qnnui.cpp \
     src/gaprogress.cpp \
-    src/gathread.cpp
+    src/gathread.cpp \
+    src/runproperties.cpp
 
 HEADERS  += src/qnnui.h \
     src/gaprogress.h \
-    src/gathread.h
+    src/gathread.h \
+    src/runproperties.h
 
 FORMS    += src/qnnui.ui \
-    src/gaprogress.ui
+    src/gaprogress.ui \
+    src/runproperties.ui
 
 unix|win32: LIBS += -L$$PWD/../qnn/ -lqnn
 
