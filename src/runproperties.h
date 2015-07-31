@@ -24,10 +24,13 @@ public:
 private slots:
     void on_horizontalSlider_valueChanged(int value);
     void on_spinBox_valueChanged(int arg1);
-
     void on_toolButton_clicked();
+    void on_checkBox_GA_clicked();
+    void on_checkBox_gene_clicked();
 
 private:
+    void checkbox_clicked();
+
     Ui::RunProperties *ui;
 };
 

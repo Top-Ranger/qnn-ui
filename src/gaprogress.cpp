@@ -25,14 +25,26 @@ GAProgress::GAProgress(GenericGeneticAlgorithm *ga, QWidget *parent) :
     ui->setupUi(this);
 
     RunProperties window;
-    if(window.exec() == window.Accepted && window.folderPath() != "")
-    {
-        _amountRuns = window.runs();
-        _saveGA = window.saveGA();
-        _saveGene = window.saveGene();
-        _folderPath = window.folderPath();
-        _fileName = QString("%1T%2").arg(QDate::currentDate().toString("yyyy-mm-dd")).arg(QTime::currentTime().toString("HH:mm:ss.zzz"));
-    }
+    bool config_valid = false;
+
+    do{
+        if(window.exec() == window.Accepted)
+        {
+            if((window.folderPath() != "" || !(window.saveGA() && window.saveGene())))
+            {
+                _amountRuns = window.runs();
+                _saveGA = window.saveGA();
+                _saveGene = window.saveGene();
+                _folderPath = window.folderPath();
+                _fileName = QString("%1T%2").arg(QDate::currentDate().toString("yyyy-MM-dd")).arg(QTime::currentTime().toString("HH:mm:ss.zzz"));
+                config_valid = true;
+            }
+        }
+        else
+        {
+            config_valid = true;
+        }
+    } while(!config_valid);
 
     this->setWindowFlags(((windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint));
     ui->progressBar_2->setMaximum(_amountRuns);
@@ -90,12 +102,12 @@ void GAProgress::startRun()
 
     if(_run != 0)
     {
-        ui->textEdit->append(QString(tr("\n")).arg(_run+1));
+        ui->textEdit->append(QString(tr("\n")));
     }
 
     ui->textEdit->append(QString(tr("+++ Starting run %1 +++")).arg(_run+1));
 
-            if(_thread != NULL)
+    if(_thread != NULL)
     {
         delete _thread;
     }
@@ -133,10 +145,12 @@ void GAProgress::ga_finished(double best_fitness_value, double average_fitness, 
     }
     if(++_run < _amountRuns)
     {
+        ui->progressBar_2->setValue(_run);
         startRun();
     }
     else
     {
+        ui->progressBar_2->setValue(_amountRuns);
         QMessageBox::information(this,
                                  tr("Finished"),
                                  tr("All runs finished"),

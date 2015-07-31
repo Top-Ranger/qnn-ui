@@ -55,12 +55,27 @@ void RunProperties::on_toolButton_clicked()
     dialog.exec();
     if(dialog.selectedFiles()[0].length() > 0)
     {
-    ui->lineEdit->setText(dialog.selectedFiles()[0]);
-    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(dialog.selectedFiles()[0] != "");
+        ui->lineEdit->setText(dialog.selectedFiles()[0]);
+        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(dialog.selectedFiles()[0] != "");
     }
     else
     {
         ui->lineEdit->setText("");
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
     }
+}
+
+void RunProperties::on_checkBox_GA_clicked()
+{
+    checkbox_clicked();
+}
+
+void RunProperties::on_checkBox_gene_clicked()
+{
+    checkbox_clicked();
+}
+
+void RunProperties::checkbox_clicked()
+{
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!(ui->checkBox_GA->isChecked() || ui->checkBox_gene->isChecked()));
 }
