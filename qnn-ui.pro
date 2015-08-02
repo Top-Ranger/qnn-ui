@@ -31,3 +31,6 @@ unix|win32: LIBS += -L$$PWD/../qnn/ -lqnn
 
 INCLUDEPATH += $$PWD/../qnn/src
 DEPENDPATH += $$PWD/../qnn/src
+
+OTHER_FILES += \
+    LICENSE.GPL3
