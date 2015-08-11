@@ -35,6 +35,7 @@
 // SIM
 #include <simulation/genericsimulation.h>
 #include <simulation/tmazesimulation.h>
+#include <simulation/rebergrammarsimulation.h>
 
 // GA
 #include <ga/genericgeneticalgorithm.h>
@@ -77,6 +78,10 @@ QNNUI::QNNUI(QWidget *parent) :
     QStringList sim;
     sim << "GenericSimulation";
     sim << "TMazeSimulation";
+    sim << "ReberGrammarSimulation (DetectGrammar)";
+    sim << "ReberGrammarSimulation (CreateWords)";
+    sim << "ReberGrammarSimulation (embedded, DetectGrammar)";
+    sim << "ReberGrammarSimulation (embedded, CreateWords)";
 
     _sim_model->setStringList(sim);
 
@@ -119,6 +124,29 @@ void QNNUI::on_pushButton_clicked()
     else if(selection == "TMazeSimulation")
     {
         simulation = new TMazeSimulation();
+    }
+    else if(selection == "ReberGrammarSimulation (DetectGrammar)")
+    {
+        simulation = new ReberGrammarSimulation();
+    }
+    else if(selection == "ReberGrammarSimulation (CreateWords)")
+    {
+        ReberGrammarSimulation::config config;
+        config.mode = ReberGrammarSimulation::CreateWords;
+        simulation = new ReberGrammarSimulation(config);
+    }
+    else if(selection == "ReberGrammarSimulation (embedded, DetectGrammar)")
+    {
+        ReberGrammarSimulation::config config;
+        config.embedded = true;
+        simulation = new ReberGrammarSimulation(config);
+    }
+    else if(selection == "ReberGrammarSimulation (embedded, CreateWords)")
+    {
+        ReberGrammarSimulation::config config;
+        config.mode = ReberGrammarSimulation::CreateWords;
+        config.embedded = true;
+        simulation = new ReberGrammarSimulation(config);
     }
     else
     {
