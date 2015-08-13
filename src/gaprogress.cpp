@@ -147,6 +147,10 @@ void GAProgress::get_ga_progress(int current, int max, double best_fitness_value
 
 void GAProgress::ga_finished(double best_fitness_value, double average_fitness, int rounds)
 {
+    Q_UNUSED(best_fitness_value);
+    Q_UNUSED(average_fitness);
+    Q_UNUSED(rounds);
+
     if(_saveGene)
     {
         QString path(_folderPath);
