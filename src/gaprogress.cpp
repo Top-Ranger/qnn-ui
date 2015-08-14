@@ -79,6 +79,7 @@ GAProgress::~GAProgress()
 
     if(_thread != NULL)
     {
+        _thread->wait();
         delete _thread;
     }
     if(_stream != NULL)
@@ -127,6 +128,7 @@ void GAProgress::startRun()
 
     if(_thread != NULL)
     {
+        _thread->wait();
         delete _thread;
     }
 
