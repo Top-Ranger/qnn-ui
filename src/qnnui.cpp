@@ -193,7 +193,7 @@ void QNNUI::on_pushButton_clicked()
     }
     else if(selection == "GasNet")
     {
-        network = new GasNet(simulation->needInputLength(), 4*simulation->needOutputLength());
+        network = new GasNet(simulation->needInputLength(), simulation->needOutputLength());
     }
     else if(selection == "ModulatedSpikingNeuronsNetwork (a)")
     {
@@ -202,7 +202,7 @@ void QNNUI::on_pushButton_clicked()
         config.b_modulated = false;
         config.c_modulated = false;
         config.d_modulated = false;
-        network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), 4*simulation->needOutputLength(), config);
+        network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), simulation->needOutputLength(), config);
     }
     else if(selection == "ModulatedSpikingNeuronsNetwork (b)")
     {
@@ -211,7 +211,7 @@ void QNNUI::on_pushButton_clicked()
         config.b_modulated = true;
         config.c_modulated = false;
         config.d_modulated = false;
-        network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), 4*simulation->needOutputLength(), config);
+        network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), simulation->needOutputLength(), config);
     }
     else if(selection == "ModulatedSpikingNeuronsNetwork (c)")
     {
@@ -220,7 +220,7 @@ void QNNUI::on_pushButton_clicked()
         config.b_modulated = false;
         config.c_modulated = true;
         config.d_modulated = false;
-        network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), 4*simulation->needOutputLength(), config);
+        network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), simulation->needOutputLength(), config);
     }
     else if(selection == "ModulatedSpikingNeuronsNetwork (d)")
     {
@@ -229,7 +229,7 @@ void QNNUI::on_pushButton_clicked()
         config.b_modulated = false;
         config.c_modulated = false;
         config.d_modulated = true;
-        network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), 4*simulation->needOutputLength(), config);
+        network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), simulation->needOutputLength(), config);
     }
     else if(selection == "ModulatedSpikingNeuronsNetwork (full)")
     {
@@ -238,7 +238,7 @@ void QNNUI::on_pushButton_clicked()
         config.b_modulated = true;
         config.c_modulated = true;
         config.d_modulated = true;
-        network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), 4*simulation->needOutputLength(), config);
+        network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), simulation->needOutputLength(), config);
     }
     else if(selection == "ModulatedSpikingNeuronsNetwork (none)")
     {
@@ -247,7 +247,7 @@ void QNNUI::on_pushButton_clicked()
         config.b_modulated = false;
         config.c_modulated = false;
         config.d_modulated = false;
-        network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), 4*simulation->needOutputLength(), config);
+        network = new ModulatedSpikingNeuronsNetwork(simulation->needInputLength(), simulation->needOutputLength(), config);
     }
     else
     {
