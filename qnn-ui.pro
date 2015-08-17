@@ -21,7 +21,8 @@ SOURCES += src/main.cpp\
 HEADERS  += src/qnnui.h \
     src/gaprogress.h \
     src/gathread.h \
-    src/runproperties.h
+    src/runproperties.h \
+    src/additionalsimulationfunctions.hpp
 
 FORMS    += src/qnnui.ui \
     src/gaprogress.ui \

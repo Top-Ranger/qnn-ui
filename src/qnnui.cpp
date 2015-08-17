@@ -24,6 +24,7 @@
 #include <QMessageBox>
 #include "gaprogress.h"
 #include "gathread.h"
+#include "additionalsimulationfunctions.hpp"
 
 // NN
 #include <network/abstractneuralnetwork.h>
@@ -78,6 +79,7 @@ QNNUI::QNNUI(QWidget *parent) :
     QStringList sim;
     sim << "GenericSimulation";
     sim << "TMazeSimulation";
+    sim << "TMazeSimulation (huge)";
     sim << "ReberGrammarSimulation (DetectGrammar)";
     sim << "ReberGrammarSimulation (CreateWords)";
     sim << "ReberGrammarSimulation (embedded, DetectGrammar)";
@@ -124,6 +126,13 @@ void QNNUI::on_pushButton_clicked()
     else if(selection == "TMazeSimulation")
     {
         simulation = new TMazeSimulation();
+    }
+    else if(selection == "TMazeSimulation (huge)")
+    {
+        TMazeSimulation::config config;
+        config.max_timesteps = 500;
+        config.generateTMaze = &AdditionalSimulationFunctions::generateHugeMaze;
+        simulation = new TMazeSimulation(config);
     }
     else if(selection == "ReberGrammarSimulation (DetectGrammar)")
     {
