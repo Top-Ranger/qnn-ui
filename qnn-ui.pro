@@ -28,7 +28,8 @@ FORMS    += src/qnnui.ui \
     src/gaprogress.ui \
     src/runproperties.ui
 
-unix|win32: LIBS += -L$$PWD/../qnn/ -lqnn
+unix: LIBS += -L$$PWD/../qnn/ -lqnn
+win32: LIBS += -L$$PWD/../qnn/ -lqnn0
 
 INCLUDEPATH += $$PWD/../qnn/src
 DEPENDPATH += $$PWD/../qnn/src
