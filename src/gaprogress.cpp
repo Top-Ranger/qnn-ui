@@ -54,7 +54,7 @@ GAProgress::GAProgress(GenericGeneticAlgorithm *ga, QWidget *parent) :
                 _saveGA = window.saveGA();
                 _saveGene = window.saveGene();
                 _folderPath = window.folderPath();
-                _fileName = QString("%1T%2").arg(QDate::currentDate().toString("yyyy-MM-dd")).arg(QTime::currentTime().toString("HH:mm:ss.zzz"));
+                _fileName = QString("%1T%2").arg(QDate::currentDate().toString("yyyy-MM-dd")).arg(QTime::currentTime().toString("HH.mm.ss.zzz")); // Windows can't handle ':' so we can't use ISO time format in the name
                 config_valid = true;
             }
         }

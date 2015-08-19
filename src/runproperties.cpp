@@ -67,20 +67,8 @@ void RunProperties::on_spinBox_valueChanged(int arg1)
 
 void RunProperties::on_toolButton_clicked()
 {
-    QFileDialog dialog(this, tr("Save ga run"), "", "comma-seperated values (*.csv)");
-    dialog.setAcceptMode(QFileDialog::AcceptSave);
-    dialog.setFileMode(QFileDialog::Directory);
-    dialog.exec();
-    if(dialog.selectedFiles()[0].length() > 0)
-    {
-        ui->lineEdit->setText(dialog.selectedFiles()[0]);
-        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(dialog.selectedFiles()[0] != "");
-    }
-    else
-    {
-        ui->lineEdit->setText("");
-        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-    }
+    ui->lineEdit->setText(QFileDialog::getExistingDirectory(this, "Select output folder", ""));
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(ui->lineEdit->text() != "");
 }
 
 void RunProperties::on_checkBox_GA_clicked()
