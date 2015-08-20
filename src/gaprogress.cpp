@@ -67,8 +67,8 @@ GAProgress::GAProgress(GenericGeneticAlgorithm *ga, QWidget *parent) :
     this->setWindowFlags(((windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint));
     ui->progressBar_2->setMaximum(_amountRuns);
 
-    QObject::connect(_ga,SIGNAL(ga_current_round(int,int,double, double)),this,SLOT(get_ga_progress(int,int,double, double)));
-    QObject::connect(_ga,SIGNAL(ga_finished(double, double, int)),this,SLOT(ga_finished(double, double, int)));
+    QObject::connect(_ga,SIGNAL(ga_current_round(qint32,qint32,double, double)),this,SLOT(get_ga_progress(qint32,qint32,double, double)));
+    QObject::connect(_ga,SIGNAL(ga_finished(double, double, qint32)),this,SLOT(ga_finished(double, double, qint32)));
 
     startRun();
 }
@@ -136,7 +136,7 @@ void GAProgress::startRun()
     _thread->start();
 }
 
-void GAProgress::get_ga_progress(int current, int max, double best_fitness_value, double average_fitness)
+void GAProgress::get_ga_progress(qint32 current, qint32 max, double best_fitness_value, double average_fitness)
 {
     ui->progressBar->setMaximum(max);
     ui->progressBar->setValue(current);
@@ -147,7 +147,7 @@ void GAProgress::get_ga_progress(int current, int max, double best_fitness_value
     }
 }
 
-void GAProgress::ga_finished(double best_fitness_value, double average_fitness, int rounds)
+void GAProgress::ga_finished(double best_fitness_value, double average_fitness, qint32 rounds)
 {
     Q_UNUSED(best_fitness_value);
     Q_UNUSED(average_fitness);
