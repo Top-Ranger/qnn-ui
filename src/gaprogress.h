@@ -45,8 +45,8 @@ private:
     void startRun();
 
     Ui::GAProgress *ui;
-    int _run;
-    int _amountRuns;
+    qint32 _run;
+    qint32 _amountRuns;
     bool _saveGA;
     bool _saveGene;
     QString _folderPath;
