@@ -50,6 +50,11 @@ bool RunProperties::saveGene()
     return ui->checkBox_gene->isChecked();
 }
 
+bool RunProperties::saveXML()
+{
+    return ui->checkBox_XML->isChecked();
+}
+
 int RunProperties::runs()
 {
     return ui->spinBox->value();
@@ -81,7 +86,13 @@ void RunProperties::on_checkBox_gene_clicked()
     checkbox_clicked();
 }
 
+
+void RunProperties::on_checkBox_XML_clicked()
+{
+    checkbox_clicked();
+}
+
 void RunProperties::checkbox_clicked()
 {
-    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!(ui->checkBox_GA->isChecked() || ui->checkBox_gene->isChecked()));
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!(ui->checkBox_GA->isChecked() || ui->checkBox_gene->isChecked() || ui->checkBox_XML->isChecked()));
 }

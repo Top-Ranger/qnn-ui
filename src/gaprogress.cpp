@@ -33,6 +33,7 @@ GAProgress::GAProgress(GenericGeneticAlgorithm *ga, QWidget *parent) :
     _amountRuns(1),
     _saveGA(false),
     _saveGene(false),
+    _saveXML(false),
     _folderPath(""),
     _fileName(""),
     _thread(NULL),
@@ -53,6 +54,7 @@ GAProgress::GAProgress(GenericGeneticAlgorithm *ga, QWidget *parent) :
                 _amountRuns = window.runs();
                 _saveGA = window.saveGA();
                 _saveGene = window.saveGene();
+                _saveXML = window.saveXML();
                 _folderPath = window.folderPath();
                 _fileName = QString("%1T%2").arg(QDate::currentDate().toString("yyyy-MM-dd")).arg(QTime::currentTime().toString("HH.mm.ss.zzz")); // Windows can't handle ':' so we can't use ISO time format in the name
                 config_valid = true;
@@ -165,6 +167,18 @@ void GAProgress::ga_finished(double best_fitness_value, double average_fitness, 
                                  tr("Can not save"),
                                  tr("Can not save gene"));
         }
+        delete gene;
+    }
+    if(_saveXML)
+    {
+        AbstractNeuralNetwork *network = _ga->get_network_copy();
+        GenericGene *gene = _ga->best_gene();
+        network->initialise(gene);
+        QString path(_folderPath);
+        path = path.append("/%1-%2.xml").arg(_fileName).arg(_run+1);
+        QFile file(path);
+        network->saveNetworkConfig(&file);
+        delete network;
         delete gene;
     }
     if(++_run < _amountRuns)

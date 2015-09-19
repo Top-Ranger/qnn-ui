@@ -36,6 +36,7 @@ public:
     QString folderPath();
     bool saveGA();
     bool saveGene();
+    bool saveXML();
     int runs();
 
 
@@ -45,6 +46,7 @@ private slots:
     void on_toolButton_clicked();
     void on_checkBox_GA_clicked();
     void on_checkBox_gene_clicked();
+    void on_checkBox_XML_clicked();
 
 private:
     void checkbox_clicked();

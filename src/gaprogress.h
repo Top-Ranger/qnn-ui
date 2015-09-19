@@ -49,6 +49,7 @@ private:
     qint32 _amountRuns;
     bool _saveGA;
     bool _saveGene;
+    bool _saveXML;
     QString _folderPath;
     QString _fileName;
     GAThread *_thread;
