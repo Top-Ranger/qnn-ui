@@ -171,8 +171,8 @@ void GAProgress::ga_finished(double best_fitness_value, double average_fitness, 
     }
     if(_saveXML)
     {
-        AbstractNeuralNetwork *network = _ga->get_network_copy();
-        GenericGene *gene = _ga->best_gene();
+        AbstractNeuralNetwork *network = _ga->getNetworkCopy();
+        GenericGene *gene = _ga->bestGene();
         network->initialise(gene);
         QString path(_folderPath);
         path = path.append("/%1-%2.xml").arg(_fileName).arg(_run+1);

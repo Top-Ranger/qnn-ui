@@ -26,10 +26,10 @@ GAThread::GAThread(GenericGeneticAlgorithm *ga, QObject *parent) :
 
 void GAThread::run()
 {
-    _ga->run_ga();
+    _ga->runGa();
 }
 
 GenericGene *GAThread::getBestGene()
 {
-    return _ga->best_gene();
+    return _ga->bestGene();
 }
