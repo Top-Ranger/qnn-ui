@@ -1,12 +1,12 @@
 #ifndef ADDITIONALSIMULATIONFUNCTIONS_HPP
 #define ADDITIONALSIMULATIONFUNCTIONS_HPP
 
-#include <QList>
+#include <QVector>
 
 namespace AdditionalSimulationFunctions {
-QList<int> generateHugeMaze()
+QVector<qint32> generateHugeMaze()
 {
-    QList<int> list;
+    QVector<qint32> list;
     int number = (qrand()%5)+1;
     list << number;
     for(int i = 0; i < 150; ++i)
