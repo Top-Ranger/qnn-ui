@@ -7,6 +7,7 @@ namespace AdditionalSimulationFunctions {
 QVector<qint32> generateHugeMaze()
 {
     QVector<qint32> list;
+    list.reserve(152);
     int number = (qrand()%5)+1;
     list << number;
     for(int i = 0; i < 150; ++i)
