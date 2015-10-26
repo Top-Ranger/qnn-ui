@@ -22,7 +22,7 @@
 #include <QVector>
 
 namespace AdditionalSimulationFunctions {
-QVector<qint32> generateHugeMaze()
+static QVector<qint32> generateHugeMaze()
 {
     QVector<qint32> list;
     list.reserve(152);
