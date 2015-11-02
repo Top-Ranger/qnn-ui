@@ -36,3 +36,6 @@ DEPENDPATH += $$PWD/../qnn/src
 
 OTHER_FILES += \
     LICENSE.GPL3
+
+DISTFILES += \
+    README
