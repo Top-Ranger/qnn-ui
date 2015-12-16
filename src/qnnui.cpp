@@ -42,6 +42,7 @@
 #include <ga/genericgeneticalgorithm.h>
 #include <ga/nonparallelgenericgeneticalgorithm.h>
 #include <ga/cuckoosearch.h>
+#include <ga/nonparallelcuckoosearch.h>
 
 
 QNNUI::QNNUI(QWidget *parent) :
@@ -92,6 +93,7 @@ QNNUI::QNNUI(QWidget *parent) :
     ga << "GenericGeneticAlgorithm";
     ga << "NonParallelGenericGeneticAlgorithm";
     ga << "CuckooSearch";
+    ga << "NonParallelCuckooSearch";
 
     _ga_model->setStringList(ga);
 }
@@ -279,6 +281,10 @@ void QNNUI::on_pushButton_clicked()
     else if(selection == "CuckooSearch")
     {
         ga = new CuckooSearch(network, simulation);
+    }
+    else if(selection == "NonParallelCuckooSearch")
+    {
+        ga = new NonParallelCuckooSearch(network, simulation);
     }
     else
     {
