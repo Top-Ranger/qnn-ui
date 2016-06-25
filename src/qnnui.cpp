@@ -34,7 +34,7 @@
 #include <network/modulatedspikingneuronsnetwork.h>
 
 // SIM
-#include <simulation/genericsimulation.h>
+#include <simulation/abstractsimulation.h>
 #include <simulation/tmazesimulation.h>
 #include <simulation/rebergrammarsimulation.h>
 
@@ -79,7 +79,6 @@ QNNUI::QNNUI(QWidget *parent) :
     _nn_model->setStringList(nn);
 
     QStringList sim;
-    sim << "GenericSimulation";
     sim << "TMazeSimulation";
     sim << "TMazeSimulation (huge)";
     sim << "ReberGrammarSimulation (DetectGrammar)";
@@ -106,7 +105,7 @@ QNNUI::~QNNUI()
 void QNNUI::on_pushButton_clicked()
 {
     AbstractNeuralNetwork *network = NULL;
-    GenericSimulation *simulation = NULL;
+    AbstractSimulation *simulation = NULL;
     GenericGeneticAlgorithm *ga = NULL;
 
     QString selection;
@@ -123,11 +122,7 @@ void QNNUI::on_pushButton_clicked()
 
     // parse SIM
     selection = ui->simView->currentIndex().data().toString();
-    if(selection == "GenericSimulation")
-    {
-        simulation = new GenericSimulation();
-    }
-    else if(selection == "TMazeSimulation")
+    if(selection == "TMazeSimulation")
     {
         simulation = new TMazeSimulation();
     }
