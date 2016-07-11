@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Marcus Soll
+ * Copyright (C) 2015,2016 Marcus Soll
  * This file is part of qnn-ui.
  *
  * qnn-ui is free software: you can redistribute it and/or modify
@@ -22,6 +22,8 @@
 #include <math.h>
 #include <QStringList>
 #include <QMessageBox>
+#include <QThreadPool>
+#include <QThread>
 #include "gaprogress.h"
 #include "gathread.h"
 #include "additionalsimulationfunctions.hpp"
@@ -40,9 +42,7 @@
 
 // GA
 #include <ga/genericgeneticalgorithm.h>
-#include <ga/nonparallelgenericgeneticalgorithm.h>
 #include <ga/cuckoosearch.h>
-#include <ga/nonparallelcuckoosearch.h>
 
 
 QNNUI::QNNUI(QWidget *parent) :
@@ -90,9 +90,9 @@ QNNUI::QNNUI(QWidget *parent) :
 
     QStringList ga;
     ga << "GenericGeneticAlgorithm";
-    ga << "NonParallelGenericGeneticAlgorithm";
+    ga << "GenericGeneticAlgorithm (non-parallel)";
     ga << "CuckooSearch";
-    ga << "NonParallelCuckooSearch";
+    ga << "CuckooSearch (non-parallel)";
 
     _ga_model->setStringList(ga);
 }
@@ -268,18 +268,22 @@ void QNNUI::on_pushButton_clicked()
     if(selection == "GenericGeneticAlgorithm")
     {
         ga = new GenericGeneticAlgorithm(network, simulation);
+        QThreadPool::globalInstance()->setMaxThreadCount(QThread::idealThreadCount());
     }
-    else if(selection == "NonParallelGenericGeneticAlgorithm")
+    else if(selection == "GenericGeneticAlgorithm (non-parallel)")
     {
-        ga = new NonParallelGenericGeneticAlgorithm(network, simulation);
+        ga = new GenericGeneticAlgorithm(network, simulation);
+        QThreadPool::globalInstance()->setMaxThreadCount(1);
     }
     else if(selection == "CuckooSearch")
     {
         ga = new CuckooSearch(network, simulation);
+        QThreadPool::globalInstance()->setMaxThreadCount(QThread::idealThreadCount());
     }
-    else if(selection == "NonParallelCuckooSearch")
+    else if(selection == "CuckooSearch (non-parallel)")
     {
-        ga = new NonParallelCuckooSearch(network, simulation);
+        ga = new CuckooSearch(network, simulation);
+        QThreadPool::globalInstance()->setMaxThreadCount(1);
     }
     else
     {
